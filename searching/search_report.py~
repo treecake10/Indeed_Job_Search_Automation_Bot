@@ -1,3 +1,4 @@
+# contains method to parse specific data that is neeeded from each of the job boxes
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 from prettytable import PrettyTable
