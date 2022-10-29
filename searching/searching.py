@@ -8,7 +8,7 @@ from searching.search_report import SearchReport
 
 class Searching(webdriver.Chrome):
 
-    def __init__(self, driver_path="", teardown=False):
+    def __init__(self, driver_path=r";C:/Users/n_Tib/PycharmProjects/JobSearchBot/driver", teardown=False):
         self.driver_path = driver_path
         self.teardown = teardown
         os.environ['PATH'] += self.driver_path

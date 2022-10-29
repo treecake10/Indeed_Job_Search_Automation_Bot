@@ -2,8 +2,29 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 class ApplyingFiltration:
+
     def __init__(self, driver:WebDriver):
         self.driver = driver
+
+
+    def find_pill_elements(self):
+
+        filtration_pills_container = self.driver.find_element(
+            By.CLASS_NAME,
+            'yosegi-FilterPill-pillList'
+        )
+
+        return filtration_pills_container.find_elements(
+            By.CLASS_NAME,
+            'yosegi-FilterPill-dropdownPillContainer'
+        )
+
+    def find_filter_pill_dropdown_list(self, index=None):
+
+        return self.find_pill_elements()[index].find_elements(
+            By.CSS_SELECTOR,
+            'a[class=yosegi-FilterPill-dropdownListItemLink]'
+        )
 
     '''
     functions that click the buttons of radius location, experience level, job type, and developer skills
@@ -25,7 +46,7 @@ class ApplyingFiltration:
         job_dev_skills_btn_position_1 = self.driver.find_element(By.ID, 'filter-taxo1')
         job_dev_skills_btn_label = job_dev_skills_btn_position_1.find_element(By.CLASS_NAME, 'yosegi-FilterPill-pillLabel').get_attribute('innerHTML')
 
-        if str(job_dev_skills_btn_label) == "Developer Skills":
+        if str(job_dev_skills_btn_label) == "Developer Skill":
             job_dev_skills_btn_position_1.click()
         else:
             job_dev_skills_btn_position_2 = self.driver.find_element(By.ID, 'filter-taxo2')
@@ -38,20 +59,7 @@ class ApplyingFiltration:
 
     def apply_radius(self, radius_val):
 
-        filtration_pills_container = self.driver.find_element(
-            By.CLASS_NAME,
-            'yosegi-FilterPill-pillList'
-        )
-
-        filtration_pills = filtration_pills_container.find_elements(
-            By.CLASS_NAME,
-            'yosegi-FilterPill-dropdownPillContainer'
-        )
-
-        radius_elements = filtration_pills[2].find_elements(
-            By.CSS_SELECTOR,
-            'a[class=yosegi-FilterPill-dropdownListItemLink]'
-        )
+        radius_elements = self.find_filter_pill_dropdown_list(2)
 
         for radius_element in radius_elements:
 
@@ -63,20 +71,7 @@ class ApplyingFiltration:
 
     def apply_job_type(self, type_val):
 
-        filtration_pills_container = self.driver.find_element(
-            By.CLASS_NAME,
-            'yosegi-FilterPill-pillList'
-        )
-
-        filtration_pills = filtration_pills_container.find_elements(
-            By.CLASS_NAME,
-            'yosegi-FilterPill-dropdownPillContainer'
-        )
-
-        job_type_elements = filtration_pills[4].find_elements(
-            By.CSS_SELECTOR,
-            'a[class=yosegi-FilterPill-dropdownListItemLink]'
-        )
+        job_type_elements = self.find_filter_pill_dropdown_list(4)
 
         for job_type_element in job_type_elements:
 
@@ -89,20 +84,7 @@ class ApplyingFiltration:
 
     def apply_exp_lvl(self, exp_val):
 
-        filtration_pills_container = self.driver.find_element(
-            By.CLASS_NAME,
-            'yosegi-FilterPill-pillList'
-        )
-
-        filtration_pills = filtration_pills_container.find_elements(
-            By.CLASS_NAME,
-            'yosegi-FilterPill-dropdownPillContainer'
-        )
-
-        experience_level_elements = filtration_pills[10].find_elements(
-            By.CSS_SELECTOR,
-            'a[class=yosegi-FilterPill-dropdownListItemLink]'
-        )
+        experience_level_elements = self.find_filter_pill_dropdown_list(10)
 
         for exp_lvl_element in experience_level_elements:
 
@@ -115,28 +97,11 @@ class ApplyingFiltration:
 
     def apply_dev_skill(self, skill_val):
 
-        filtration_pills_container = self.driver.find_element(
-            By.CLASS_NAME,
-            'yosegi-FilterPill-pillList'
-        )
-
-        filtration_pills = filtration_pills_container.find_elements(
-            By.CLASS_NAME,
-            'yosegi-FilterPill-dropdownPillContainer'
-        )
-
         # The location of the 'Developer Skills' filtration pill "button" will change at times
         # So try to find the elements of this pill or button at different positions in the container
 
-        dev_skill_elements_1 = filtration_pills[4].find_elements(
-            By.CSS_SELECTOR,
-            'a[class=yosegi-FilterPill-dropdownListItemLink]'
-        )
-
-        dev_skill_elements_2 = filtration_pills[5].find_elements(
-            By.CSS_SELECTOR,
-            'a[class=yosegi-FilterPill-dropdownListItemLink]'
-        )
+        dev_skill_elements_1 = self.find_filter_pill_dropdown_list(4)
+        dev_skill_elements_2 = self.find_filter_pill_dropdown_list(5)
 
         dev_skill_elements_found = False
 

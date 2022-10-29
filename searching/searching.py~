@@ -48,7 +48,7 @@ class Searching(webdriver.Chrome):
         filtration = ApplyingFiltration(driver=self)
 
         filtration.radius_btn()
-        filtration.apply_radius(radius_val='within 100 miles')
+        filtration.apply_radius(radius_val='Remote')
 
         filtration.job_type_btn()
         filtration.apply_job_type(type_val='Full-time')
