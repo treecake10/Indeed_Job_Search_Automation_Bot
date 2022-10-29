@@ -23,6 +23,12 @@ class Searching(webdriver.Chrome):
         if self.teardown:
             self.quit()
 
+    def find_job_cards(self):
+        return self.find_element(
+            By.ID,
+            'mosaic-provider-jobcards'
+        )
+
     def landing_page(self):
         self.get(const.BASE_URL)
 
@@ -71,10 +77,7 @@ class Searching(webdriver.Chrome):
                     'a[data-testid=pagination-page-next]'
                 )
 
-                job_cards = self.find_element(
-                    By.ID,
-                    'mosaic-provider-jobcards'
-                )
+                job_cards = self.find_job_cards()
 
                 # Get every attribute found in every job card
                 report = SearchReport(job_cards)
@@ -85,10 +88,7 @@ class Searching(webdriver.Chrome):
         # Last result page has no next button. So pull all attributes from the jobs on that page one last time.
         except NoSuchElementException:
 
-            job_cards = self.find_element(
-                By.ID,
-                'mosaic-provider-jobcards'
-            )
+            job_cards = self.find_job_cards()
 
             report = SearchReport(job_cards)
             print(report.pull_job_card_attributes())
