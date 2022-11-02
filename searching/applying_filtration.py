@@ -84,16 +84,32 @@ class ApplyingFiltration:
 
     def apply_exp_lvl(self, exp_val):
 
-        experience_level_elements = self.find_filter_pill_dropdown_list(10)
+        experience_level_elements_1 = self.find_filter_pill_dropdown_list(10)
+        experience_level_elements_2 = self.find_filter_pill_dropdown_list(11)
 
-        for exp_lvl_element in experience_level_elements:
+        exp_lvl_elements_found = False
+
+        for exp_lvl_element in experience_level_elements_1:
 
             exp_lvl_text = exp_lvl_element.get_attribute('innerHTML')
             white_space_index = exp_lvl_text.index("(")
 
             if str(exp_lvl_text[0:white_space_index-1]) == f'{exp_val}':
+                exp_lvl_elements_found = True
                 exp_lvl_element.click()
                 break
+
+        if exp_lvl_elements_found == False:
+
+            for exp_lvl_element in experience_level_elements_2:
+
+                exp_lvl_text = exp_lvl_element.get_attribute('innerHTML')
+                white_space_index = exp_lvl_text.index("(")
+
+                if str(exp_lvl_text[0:white_space_index - 1]) == f'{exp_val}':
+                    exp_lvl_element.click()
+                    break
+
 
     def apply_dev_skill(self, skill_val):
 
